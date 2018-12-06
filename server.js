@@ -1,9 +1,14 @@
+import path from 'path';
+import http from 'http';
 import express from 'express';
-const path = require('path');
+import socketIO from 'socket.io';
 
-const app = express();
-const port = process.env.PORT || 3000;
 const publicPath = path.join(__dirname, '../public');
-console.log('publicPath', publicPath);
+const port = process.env.PORT || 3000;
+const app = express();
+const server = http.createServer(app);
+
+const io = socketIO(server);
 app.use(express.static(publicPath));
-app.listen(port, () => console.log(`Server is up on ${port}`));
+
+server.listen(port, () => console.log(`Server is up on ${port}`));
