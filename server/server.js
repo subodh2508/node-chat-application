@@ -15,6 +15,14 @@ const io = socketIO(server);
 io.on('connection', (socket) => {
 
     console.log('New user connected');
+    socket.emit('newEmail', {
+        from: "example@example.com",
+        text: "Hey, This is new mail",
+        createdAt: 123
+    });
+    socket.on('createEmail', (createEmailData) => {
+        console.log('createEmailDatex: ', createEmailData);
+    });
     socket.on('disconnect', () => {
         console.log('User Disconnected...!!!');
     });
