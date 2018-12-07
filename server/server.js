@@ -14,8 +14,10 @@ const io = socketIO(server);
 io.on('connection', (socket) => {
 
     console.log('New user connected');
-    socket.on('createMessege', (messege) => {
+    socket.on('createMessege', (messege, callback) => {
+        console.log('createMessege: ', messege);
         io.emit('newMessege', generateMessege(messege.from, messege.text));
+        callback('This is from server');
     });
     socket.emit('newMessege', generateMessege('Admin', "Welcome to chat application"));
     socket.broadcast.emit('newMessege', generateMessege('Admin', "New User Joined"));
