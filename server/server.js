@@ -14,31 +14,9 @@ const io = socketIO(server);
 io.on('connection', (socket) => {
 
     console.log('New user connected');
-    // socket.emit('newMessege', {
-    //     from: "jerry",
-    //     text: "Hey, This is Jerry ",
-    //     createdAt: 123
-    // });
     socket.on('createMessege', (messege) => {
-        // console.log('messege: ', messege);
         io.emit('newMessege', generateMessege(messege.from, messege.text));
-        // io.emit('newMessege', {
-        //     from: messege.from,
-        //     text: messege.text,
-        //     createdAt: new Date().toString()
-        // });
     });
-
-    // socket.emit('newMessege', {
-    //     from: 'Admin',
-    //     text: "Welcome to chat application",
-    //     createdAt: new Date().toString()
-    // });
-    // socket.broadcast.emit('newMessege', {
-    //     from: 'Admin',
-    //     text: "New User Joined",
-    //     createdAt: new Date().toString()
-    // });
     socket.emit('newMessege', generateMessege('Admin', "Welcome to chat application"));
     socket.broadcast.emit('newMessege', generateMessege('Admin', "New User Joined"));
     socket.on('disconnect', () => {
