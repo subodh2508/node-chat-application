@@ -2,9 +2,8 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
-// import http from 'http';
-// import express from 'express';
-// import socketIO from 'socket.io';
+
+const {generateMessege} = require('./utils/messege');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -20,30 +19,28 @@ io.on('connection', (socket) => {
     //     text: "Hey, This is Jerry ",
     //     createdAt: 123
     // });
-    socket.on('createMessege', (createMessegeData) => {
-        // console.log('createMessegeData: ', createMessegeData);
-        socket.broadcast.emit('newMessege', {
-            from: createMessegeData.from,
-            text: createMessegeData.text,
-            createdAt: new Date().toString()
-        });
+    socket.on('createMessege', (messege) => {
+        // console.log('messege: ', messege);
+        io.emit('newMessege', generateMessege(messege.from, messege.text));
         // io.emit('newMessege', {
-        //     from: createMessegeData.from,
-        //     text: createMessegeData.text,
+        //     from: messege.from,
+        //     text: messege.text,
         //     createdAt: new Date().toString()
         // });
     });
 
-    socket.emit('newMessege', {
-        from: 'Admin',
-        text: "Welcome to chat application",
-        createdAt: new Date().toString()
-    });
-    socket.broadcast.emit('newMessege', {
-        from: 'Admin',
-        text: "New User Joined",
-        createdAt: new Date().toString()
-    });
+    // socket.emit('newMessege', {
+    //     from: 'Admin',
+    //     text: "Welcome to chat application",
+    //     createdAt: new Date().toString()
+    // });
+    // socket.broadcast.emit('newMessege', {
+    //     from: 'Admin',
+    //     text: "New User Joined",
+    //     createdAt: new Date().toString()
+    // });
+    socket.emit('newMessege', generateMessege('Admin', "Welcome to chat application"));
+    socket.broadcast.emit('newMessege', generateMessege('Admin', "New User Joined"));
     socket.on('disconnect', () => {
         console.log('User Disconnected...!!!');
     });
