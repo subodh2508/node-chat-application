@@ -22,11 +22,27 @@ io.on('connection', (socket) => {
     // });
     socket.on('createMessege', (createMessegeData) => {
         // console.log('createMessegeData: ', createMessegeData);
-        io.emit('newMessege', {
+        socket.broadcast.emit('newMessege', {
             from: createMessegeData.from,
             text: createMessegeData.text,
             createdAt: new Date().toString()
         });
+        // io.emit('newMessege', {
+        //     from: createMessegeData.from,
+        //     text: createMessegeData.text,
+        //     createdAt: new Date().toString()
+        // });
+    });
+
+    socket.emit('newMessege', {
+        from: 'Admin',
+        text: "Welcome to chat application",
+        createdAt: new Date().toString()
+    });
+    socket.broadcast.emit('newMessege', {
+        from: 'Admin',
+        text: "New User Joined",
+        createdAt: new Date().toString()
     });
     socket.on('disconnect', () => {
         console.log('User Disconnected...!!!');
