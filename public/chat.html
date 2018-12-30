@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <title>Chat  | Chat App </title>
+        <link rel="stylesheet" href="/css/styles.css">
+
+    </head>
+    <body class="chat">
+        <div class="chat__sidebar">
+            <h3>People</h3>
+            <div id="user"></div>
+        </div>
+        <div class="chat__main">
+            <ol id="messeges" class="chat__messages"></ol>
+            <div class="chat__footer">
+                <form id="messege-form">
+                    <input name="messege" type="text" placeholder="Messege" autofocus autocomplete="off">
+                    <button>Send</button>
+                    
+                </form>
+                <button id="send-location">Send location</button>
+            </div>
+        </div>
+        
+<script id="location-messege-template" type="type/template">
+    <li class="message">
+        <div class="message__title"> 
+            <h4>{{from}}</h4>
+            <span>{{createdAt}}</span>
+        </div>
+        <div class="message__body">
+            <p>
+                <a href="{{url}}" target="_blank"> My current location </a>
+            </p>
+        </div>
+</script>
+<script id="messege-template" type="type/template">
+    <li class="message">
+        <div class="message__title"> 
+            <h4>{{from}}</h4>
+            <span>{{createdAt}}</span>
+        </div>
+        <div class="message__body">
+            <p>{{text}}</p>
+        </div>
+</script>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/libs/jquery-3.3.1.min.js"></script>
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/mustache.js"></script>
+        <script src="/js/chat.js"></script>
+    </body>
+</html>
