@@ -16,12 +16,12 @@ io.on('connection', (socket) => {
     console.log('New user connected');
     socket.on('createLocationMessege', (coords, callback) => {
         io.emit('newLocationMessege', generateLocationMessege('Admin', coords.latitude, coords.longitude));
-        callback('This location msg is from server');
+        callback();
     });
     socket.on('createMessege', (messege, callback) => {
         console.log('createMessege: ', messege);
         io.emit('newMessege', generateMessege(messege.from, messege.text));
-        callback('This is from server');
+        callback();
     });
     socket.emit('newMessege', generateMessege('Admin', "Welcome to chat application"));
     socket.broadcast.emit('newMessege', generateMessege('Admin', "New User Joined"));

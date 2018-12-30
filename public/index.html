@@ -2,20 +2,26 @@
 <html>
     <head>
         <meta charset="utf-8"> 
-    </head>
-    <body>
-        <p>
-            This is chat application index page
-        </p>
-        <ol id="messeges">
+        <link rel="stylesheet" href="/css/styles.css">
 
-        </ol>
-        <form id="messege-form">
-            <input name="messege" type="text" placeholder="Messege">
-            <button>Send</button>
-            
-        </form>
-        <button id="send-location">Send Location</button>
+    </head>
+    <body class="chat">
+        <div class="chat__sidebar">
+            <h3>People</h3>
+            <div id="user"></div>
+        </div>
+        <div class="chat__main">
+            <ol id="messeges" class="chat__messages"></ol>
+            <div class="chat__footer">
+                <form id="messege-form">
+                    <input name="messege" type="text" placeholder="Messege" autofocus autocomplete="off">
+                    <button>Send</button>
+                    
+                </form>
+                <button id="send-location">Send location</button>
+            </div>
+        </div>
+        
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/libs/jquery-3.3.1.min.js"></script>
         <script src="/js/index.js"></script>
