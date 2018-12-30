@@ -4,22 +4,38 @@ var socket = io();
             });
             
             socket.on('newMessege', function(messege) {
-                console.log('messege: ', messege);
+                var template = jQuery('#messege-template').html();
                 var formattedTime = moment(messege.createdAt).format('h:mm a');
-                var li = jQuery('<li></li>');
-                li.text(`${messege.from} ${formattedTime}: ${messege.text}`);
+                var html = Mustache.render(template, {
+                    from: messege.from,
+                    text: messege.text,
+                    createdAt: formattedTime
+                });
+                jQuery('#messeges').append(html);
+                // console.log('messege: ', messege);
+                // var formattedTime = moment(messege.createdAt).format('h:mm a');
+                // var li = jQuery('<li></li>');
+                // li.text(`${messege.from} ${formattedTime}: ${messege.text}`);
 
-                jQuery('#messeges').append(li);
+                // jQuery('#messeges').append(li);
             });
             socket.on('newLocationMessege', function(messege) {
+                var template = jQuery('#location-messege-template').html();
                 var formattedTime = moment(messege.createdAt).format('h:mm a');
-                console.log('messege: ', messege);
-                var li = jQuery('<li></li>');
-                var a = jQuery('<a target="_blank">My current location</a>');
-                li.text(`${messege.from}  ${formattedTime}:  `);
-                a.attr('href', messege.url);
-                li.append(a);
-                jQuery('#messeges').append(li);
+                var html = Mustache.render(template, {
+                    from: messege.from,
+                    url: messege.url,
+                    createdAt: formattedTime
+                });
+                jQuery('#messeges').append(html);
+                // var formattedTime = moment(messege.createdAt).format('h:mm a');
+                // console.log('messege: ', messege);
+                // var li = jQuery('<li></li>');
+                // var a = jQuery('<a target="_blank">My current location</a>');
+                // li.text(`${messege.from}  ${formattedTime}:  `);
+                // a.attr('href', messege.url);
+                // li.append(a);
+                // jQuery('#messeges').append(li);
             });
             socket.on('disconnect', function() {
                 console.log('Server Disconnected...!!!');
