@@ -20,6 +20,6 @@ var socket = io();
                     from: 'User',
                     text: jQuery('[name=messege]').val()
                 }, function() {
-                    
+                    console.log('got it: ', data);
                 });
             })
