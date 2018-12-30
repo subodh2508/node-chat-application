@@ -1,4 +1,20 @@
 var socket = io();
+
+function ScrollToBottom() {
+    var messeges = jQuery('#messeges');
+    var newMessege = messeges.children('li:last-child');
+
+    var clientHeight = messeges.prop('clientHeight');
+    var scrollTop = messeges.prop('scrollTop');
+    var scrollHeight = messeges.prop('scrollHeight');
+    var newMessegeHeight = newMessege.innerHeight();
+    var lastMessegeHeight = newMessege.prev().innerHeight();
+
+    if( clientHeight + scrollTop + newMessegeHeight + lastMessegeHeight >= scrollHeight) {
+        console.log('should scroll....');
+        messeges.scrollTop(scrollHeight);
+    }
+}
             socket.on('connect', function() {
                 console.log('Connected to server...!!!');
             });
@@ -12,6 +28,7 @@ var socket = io();
                     createdAt: formattedTime
                 });
                 jQuery('#messeges').append(html);
+                ScrollToBottom();
                 // console.log('messege: ', messege);
                 // var formattedTime = moment(messege.createdAt).format('h:mm a');
                 // var li = jQuery('<li></li>');
@@ -28,6 +45,7 @@ var socket = io();
                     createdAt: formattedTime
                 });
                 jQuery('#messeges').append(html);
+                ScrollToBottom();
                 // var formattedTime = moment(messege.createdAt).format('h:mm a');
                 // console.log('messege: ', messege);
                 // var li = jQuery('<li></li>');
