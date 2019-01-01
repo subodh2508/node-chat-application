@@ -77,12 +77,12 @@ function ScrollToBottom() {
                     ol.append(jQuery('<li></li>').text(user));
                 });
                 jQuery('#users').html(ol); 
-            })
+            });
+
             var messegeTextBox = jQuery('[name=messege]');
             jQuery('#messege-form').on('submit', function(e) {
                 e.preventDefault();
                 socket.emit('createMessege', {
-                    from: 'User',
                     text: messegeTextBox.val()
                 }, function() {
                     messegeTextBox.val('');
