@@ -2,6 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
+const lowerCase = require('lodash/lowerCase');
 
 const {generateMessege, generateLocationMessege} = require('./utils/messege');
 const {isRealString} = require('./utils/validations');
@@ -12,6 +13,15 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 let users = new Users();
+
+
+        // socket.leave(param.room); // to leave the room
+
+        //io.emit - send messege to every connected user
+        //io.to('room name').emit - send messege to every connected user in specific room
+        //socket.broadcacte.emit - send messege to every connected user except to current user
+        //socket.broadcacte.to('room name').emit - send messege to every connected user except to current user to specific roon
+        //socket.emit - send messege to specific user
 
 const io = socketIO(server);
 io.on('connection', (socket) => {
@@ -30,16 +40,18 @@ io.on('connection', (socket) => {
             callback('Name and Room name are required');
         }
 
+        // // users.users.forEach(function(user){
+        // //     if()
+        // // });
+        // var user = users.users.find(user => user.name === 'sam');
+        // console.log('user ==============', user);
+        // if(lowerCase(param.name) === lowerCase(user.name)){
+        //     callback('User already exist');
+        // }
         socket.join(param.room);
         users.removeUser(socket.id);
         users.addUser(socket.id, param.name, param.room);
-        // socket.leave(param.room); // to leave the room
 
-        //io.emit - send messege to every connected user
-        //io.to('room name').emit - send messege to every connected user in specific room
-        //socket.broadcacte.emit - send messege to every connected user except to current user
-        //socket.broadcacte.to('room name').emit - send messege to every connected user except to current user to specific roon
-        //socket.emit - send messege to specific user
         io.to(param.room).emit('updateUserList', users.getUserList(param.room));
         socket.emit('newMessege', generateMessege('Admin', "Welcome to chat application"));
         socket.broadcast.to(param.room).emit('newMessege', generateMessege('Admin', `${param.name} has joined`));

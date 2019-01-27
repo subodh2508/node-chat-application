@@ -1,7 +1,7 @@
 class Users {
 
     constructor() {
-        this.users = [];
+        this.users = [{id: '123', name: 'sam', room: 'test'}];
     }
 
     addUser(id, name, room) {
